@@ -6,8 +6,8 @@ import { useBookList } from '../hooks/useBookList';
 import { FINISH, READING } from '../constants/url';
 import Title from '../components/BookList/Title';
 import { FaPen } from 'react-icons/fa';
-import { useModal } from '../hooks/useModal';
 import { ChangeUserInfoProps } from '../models/user.model';
+import { useModalStore } from '../store/modalStore';
 
 export default function Main() {
   const { nickname, goal, isUserInfoLoading } = useUserInfo();
@@ -24,11 +24,11 @@ export default function Main() {
     isEmpty: isFinishListEmpty,
   } = useBookList(FINISH);
 
-  const { openModal } = useModal();
+  const open = useModalStore((state) => state.open);
   const { changeProfile } = useUserInfo();
 
   const handleClick = () => {
-    openModal(ChangeNicknameModal, {
+    open(ChangeNicknameModal, {
       onSubmit: (data: ChangeUserInfoProps) => changeProfile(data),
     });
   };
@@ -36,29 +36,29 @@ export default function Main() {
   return (
     <MainStyle>
       {!isUserInfoLoading && (
-        <div className="profile">
-          <div className="profile_item">
-            <div className="title">
-              <Title color="first">목표</Title>
+        <div className='profile'>
+          <div className='profile_item'>
+            <div className='title'>
+              <Title color='first'>목표</Title>
               <button onClick={handleClick}>
                 <FaPen />
               </button>
             </div>
-            <div className="user">
-              <p className="nickname">{nickname}</p>
-              <p className="goal">{goal}</p>
+            <div className='user'>
+              <p className='nickname'>{nickname}</p>
+              <p className='goal'>{goal}</p>
             </div>
           </div>
-          <div className="profile_item">
-            <Title color="first">나의 기록</Title>
-            <div className="records">
-              <div className="record">
-                <p className="sub_title">읽는 중</p>
-                <p className="count">{readingCount}권</p>
+          <div className='profile_item'>
+            <Title color='first'>나의 기록</Title>
+            <div className='records'>
+              <div className='record'>
+                <p className='sub_title'>읽는 중</p>
+                <p className='count'>{readingCount}권</p>
               </div>
-              <div className="record">
-                <p className="sub_title">완독</p>
-                <p className="count">{finishedCount}권</p>
+              <div className='record'>
+                <p className='sub_title'>완독</p>
+                <p className='count'>{finishedCount}권</p>
               </div>
             </div>
           </div>
@@ -66,14 +66,14 @@ export default function Main() {
       )}
       {!isReadingListLoading && (
         <MainBookListSection
-          title="읽고 있는 책"
+          title='읽고 있는 책'
           books={readingList}
           isEmpty={isReadingListEmpty}
         />
       )}
       {!isFinishListLoading && (
         <MainBookListSection
-          title="다 읽은 책"
+          title='다 읽은 책'
           books={finishList}
           isEmpty={isFinishListEmpty}
         />

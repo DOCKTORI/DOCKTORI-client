@@ -36,22 +36,22 @@ const ChangeNicknameModal = ({ children, onClose, onSubmit }: Props) => {
     <ChangeNicknameModalBackground>
       <Container>
         <FaPlus size={25} onClick={handleClose} />
-        <div className="modal-body">
-          <div className="modal-message">{children}</div>
-          <div className="search-container">
+        <div className='modal-body'>
+          <div className='modal-message'>{children}</div>
+          <div className='search-container'>
             <input
-              type="text"
+              type='text'
               value={newNickname}
               onChange={(e) => setNewNickname(e.target.value)}
-              placeholder="새로운 닉네임을 입력하세요"
+              placeholder='새로운 닉네임을 입력하세요'
               autoFocus
               maxLength={10}
             />
             <input
-              type="text"
+              type='text'
               value={newGoal}
               onChange={(e) => setNewGoal(e.target.value)}
-              placeholder="새로운 목표를 입력하세요."
+              placeholder='새로운 목표를 입력하세요.'
               maxLength={20}
               style={{ width: '100%' }}
             />

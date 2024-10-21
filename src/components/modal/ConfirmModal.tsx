@@ -24,9 +24,9 @@ const ConfirmModal = ({ children, onClose, onSubmit }: Props) => {
     <ConfirmModalBackground>
       <Container>
         <FaPlus size={25} onClick={handleClose} />
-        <div className="modal-body">
-          <div className="modal-message">{children}</div>
-          <Button size="medium" scheme="danger" onClick={handleSubmit}>
+        <div className='modal-body'>
+          <div className='modal-message'>{children}</div>
+          <Button size='medium' scheme='danger' onClick={handleSubmit}>
             확인
           </Button>
         </div>

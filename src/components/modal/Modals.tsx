@@ -1,12 +1,9 @@
-import { useContext } from 'react';
-import {
-  ModalsDispatchContext,
-  ModalsStateContext,
-} from '../../context/ModalsContext';
+import { useModalStore } from '../../store/modalStore';
 
 export const Modals = () => {
-  const OpenedModals = useContext(ModalsStateContext);
-  const { close } = useContext(ModalsDispatchContext);
+  const OpenedModals = useModalStore((state) => state.openedModals);
+  const close = useModalStore((state) => state.close);
+  console.log(OpenedModals);
 
   return (
     <>
