@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { createPortal } from 'react-dom';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ChangeUserInfoProps } from '../../models/user.model';
+import { useModalClose } from '../../hooks/useModalClose';
 
 interface Props {
   children: React.ReactNode;
@@ -15,6 +16,8 @@ const ChangeNicknameModal = ({ children, onClose, onSubmit }: Props) => {
   const { nickname, goal } = useUserInfo();
   const [newNickname, setNewNickname] = useState<string>(nickname || '');
   const [newGoal, setNewGoal] = useState<string>(goal || '');
+
+  const modalRef = useModalClose(onClose);
 
   useEffect(() => {
     if (nickname && goal) {
@@ -34,7 +37,7 @@ const ChangeNicknameModal = ({ children, onClose, onSubmit }: Props) => {
 
   return createPortal(
     <ChangeNicknameModalBackground>
-      <Container>
+      <Container ref={modalRef}>
         <FaPlus size={25} onClick={handleClose} />
         <div className='modal-body'>
           <div className='modal-message'>{children}</div>

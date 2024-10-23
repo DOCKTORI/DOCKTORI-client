@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { useSearchBooks } from '../../hooks/useSearchBooks';
 import { BookSearchItem } from '../../models/book.model';
 import { createPortal } from 'react-dom';
+import { useModalClose } from '../../hooks/useModalClose';
 
 interface Props {
   onClose: () => void;
@@ -14,6 +15,7 @@ interface Props {
 const SearchModal = ({ onClose, onSubmit }: Props) => {
   const [query, setQuery] = useState('');
   const { books, loading, error, searchBooks } = useSearchBooks();
+  const modalRef = useModalClose(onClose);
 
   const handleSearch = () => {
     searchBooks(query);
@@ -36,7 +38,7 @@ const SearchModal = ({ onClose, onSubmit }: Props) => {
 
   return createPortal(
     <SearchModalBackground>
-      <Container>
+      <Container ref={modalRef}>
         <FaPlus size={25} onClick={handleClose} />
         <div className='modal-body'>
           <div className='modal-message'>

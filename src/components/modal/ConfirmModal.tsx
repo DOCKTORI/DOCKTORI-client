@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import { FaPlus } from 'react-icons/fa6';
 import { createPortal } from 'react-dom';
+import { useModalClose } from '../../hooks/useModalClose';
 
 interface Props {
   children: React.ReactNode;
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const ConfirmModal = ({ children, onClose, onSubmit }: Props) => {
+  const modalRef = useModalClose(onClose);
+
   const handleClose = () => {
     onClose();
   };
@@ -22,7 +25,7 @@ const ConfirmModal = ({ children, onClose, onSubmit }: Props) => {
 
   return createPortal(
     <ConfirmModalBackground>
-      <Container>
+      <Container ref={modalRef}>
         <FaPlus size={25} onClick={handleClose} />
         <div className='modal-body'>
           <div className='modal-message'>{children}</div>

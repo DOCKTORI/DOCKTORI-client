@@ -3,7 +3,6 @@ import { useModalStore } from '../../store/modalStore';
 export const Modals = () => {
   const OpenedModals = useModalStore((state) => state.openedModals);
   const close = useModalStore((state) => state.close);
-  console.log(OpenedModals);
 
   return (
     <>
