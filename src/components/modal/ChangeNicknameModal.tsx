@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { createPortal } from 'react-dom';
 import { useUserInfo } from '../../hooks/useUserInfo';
 import { ChangeUserInfoProps } from '../../models/user.model';
+import { useModalClose } from '../../hooks/useModalClose';
 
 interface Props {
   children: React.ReactNode;
@@ -15,6 +16,8 @@ const ChangeNicknameModal = ({ children, onClose, onSubmit }: Props) => {
   const { nickname, goal } = useUserInfo();
   const [newNickname, setNewNickname] = useState<string>(nickname || '');
   const [newGoal, setNewGoal] = useState<string>(goal || '');
+
+  const modalRef = useModalClose(onClose);
 
   useEffect(() => {
     if (nickname && goal) {
@@ -34,24 +37,24 @@ const ChangeNicknameModal = ({ children, onClose, onSubmit }: Props) => {
 
   return createPortal(
     <ChangeNicknameModalBackground>
-      <Container>
+      <Container ref={modalRef}>
         <FaPlus size={25} onClick={handleClose} />
-        <div className="modal-body">
-          <div className="modal-message">{children}</div>
-          <div className="search-container">
+        <div className='modal-body'>
+          <div className='modal-message'>{children}</div>
+          <div className='search-container'>
             <input
-              type="text"
+              type='text'
               value={newNickname}
               onChange={(e) => setNewNickname(e.target.value)}
-              placeholder="새로운 닉네임을 입력하세요"
+              placeholder='새로운 닉네임을 입력하세요'
               autoFocus
               maxLength={10}
             />
             <input
-              type="text"
+              type='text'
               value={newGoal}
               onChange={(e) => setNewGoal(e.target.value)}
-              placeholder="새로운 목표를 입력하세요."
+              placeholder='새로운 목표를 입력하세요.'
               maxLength={20}
               style={{ width: '100%' }}
             />

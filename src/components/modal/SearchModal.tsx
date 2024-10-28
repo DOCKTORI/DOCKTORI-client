@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa6';
 import { useSearchBooks } from '../../hooks/useSearchBooks';
 import { BookSearchItem } from '../../models/book.model';
 import { createPortal } from 'react-dom';
+import { useModalClose } from '../../hooks/useModalClose';
 
 interface Props {
   onClose: () => void;
@@ -14,6 +15,7 @@ interface Props {
 const SearchModal = ({ onClose, onSubmit }: Props) => {
   const [query, setQuery] = useState('');
   const { books, loading, error, searchBooks } = useSearchBooks();
+  const modalRef = useModalClose(onClose);
 
   const handleSearch = () => {
     searchBooks(query);
@@ -36,35 +38,35 @@ const SearchModal = ({ onClose, onSubmit }: Props) => {
 
   return createPortal(
     <SearchModalBackground>
-      <Container>
+      <Container ref={modalRef}>
         <FaPlus size={25} onClick={handleClose} />
-        <div className="modal-body">
-          <div className="modal-message">
+        <div className='modal-body'>
+          <div className='modal-message'>
             <p>책을 검색하세요.</p>
           </div>
-          <div className="search-container">
+          <div className='search-container'>
             <input
-              type="text"
+              type='text'
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="책 제목을 입력하세요"
+              placeholder='책 제목을 입력하세요'
               onKeyDown={handleKeyDown}
               autoFocus
             />
-            <Button size="medium" scheme="primary" onClick={handleSearch}>
+            <Button size='medium' scheme='primary' onClick={handleSearch}>
               검색
             </Button>
           </div>
           {loading && <p>검색 중...</p>}
           {error && <p>{error}</p>}
-          <div className="results-container">
+          <div className='results-container'>
             {books.map((book: BookSearchItem, index) => (
               <div
-                className="result-item"
+                className='result-item'
                 key={index}
                 onClick={() => handleSubmit(book)}>
                 <img src={book.image} alt={book.title} />
-                <div className="book-info">
+                <div className='book-info'>
                   <h3>{book.title}</h3>
                   <p>{book.author}</p>
                 </div>

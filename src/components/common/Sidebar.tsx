@@ -6,16 +6,16 @@ import { RiLockPasswordFill } from 'react-icons/ri';
 import { useState, useEffect } from 'react';
 import ConfirmModal from '../modal/ConfirmModal';
 import { useAuth } from '../../hooks/useAuth';
-import { useModal } from '../../hooks/useModal';
 import SearchModal from '../modal/SearchModal';
 import { BookSearchItem } from '../../models/book.model';
 import { useAddBook } from '../../hooks/useAddBook';
 import styled from 'styled-components';
 import { FaCircleUser } from 'react-icons/fa6';
 import DropDown from './Dropdown';
+import { useModalStore } from '../../store/modalStore';
 
 const Sidebar = () => {
-  const { openModal } = useModal();
+  const open = useModalStore((state) => state.open);
   const { userWithdrawal, userLogout } = useAuth();
   const { addSearchBook } = useAddBook();
   const nav = useNavigate();
@@ -43,7 +43,7 @@ const Sidebar = () => {
   };
 
   const handleSearchClick = () => {
-    openModal(SearchModal, {
+    open(SearchModal, {
       onSubmit: (book: BookSearchItem) => {
         addSearchBook(book);
       },
@@ -51,14 +51,14 @@ const Sidebar = () => {
   };
 
   const handleLogoutClick = () => {
-    openModal(ConfirmModal, {
+    open(ConfirmModal, {
       children: <p>로그아웃하시겠습니까?</p>,
       onSubmit: userLogout,
     });
   };
 
   const handleWithdrawalClick = () => {
-    openModal(ConfirmModal, {
+    open(ConfirmModal, {
       children: (
         <>
           <p>독토리 서비스를 탈퇴하시겠습니까?</p>
@@ -71,20 +71,20 @@ const Sidebar = () => {
 
   return (
     <NavbarStyle>
-      <div className="item-containter">
-        <div className="logo" onClick={onClickLogo}>
-          <img src={image} alt="logo" />
+      <div className='item-containter'>
+        <div className='logo' onClick={onClickLogo}>
+          <img src={image} alt='logo' />
         </div>
-        <button className="addBtn" onClick={handleSearchClick}>
+        <button className='addBtn' onClick={handleSearchClick}>
           <FaPlus /> {!isMediumScreen && <span>도서 등록</span>}
         </button>
         <nav>
-          <ul className="link-items">
+          <ul className='link-items'>
             <li
               className={`link-item ${
                 location.pathname === '/favorite' ? 'active' : ''
               }`}>
-              <Link to="/favorite" title="즐겨찾기">
+              <Link to='/favorite' title='즐겨찾기'>
                 {isSmallScreen ? <FaStar /> : '즐겨찾기'}
               </Link>
             </li>
@@ -92,7 +92,7 @@ const Sidebar = () => {
               className={`link-item ${
                 location.pathname === '/readingbooks' ? 'active' : ''
               }`}>
-              <Link to="/readingbooks" title="읽고 있는 책">
+              <Link to='/readingbooks' title='읽고 있는 책'>
                 {isSmallScreen ? <FaBookOpen /> : '읽고 있는 책'}
               </Link>
             </li>
@@ -100,24 +100,24 @@ const Sidebar = () => {
               className={`link-item ${
                 location.pathname === '/readedbooks' ? 'active' : ''
               }`}>
-              <Link to="/readedbooks" title="다 읽은 책">
+              <Link to='/readedbooks' title='다 읽은 책'>
                 {isSmallScreen ? <FaBook /> : '다 읽은 책'}
               </Link>
             </li>
           </ul>
         </nav>
       </div>
-      <div className="user">
+      <div className='user'>
         <DropDown toggleButton={<FaCircleUser size={35} />}>
-          <Link to="/auth/changepassword" title="비밀번호 변경">
+          <Link to='/auth/changepassword' title='비밀번호 변경'>
             <RiLockPasswordFill />
             <span>비밀번호 변경</span>
           </Link>
-          <button onClick={handleLogoutClick} title="로그아웃">
+          <button onClick={handleLogoutClick} title='로그아웃'>
             <IoLogOut />
             <span>로그아웃</span>
           </button>
-          <button onClick={handleWithdrawalClick} title="회원탈퇴">
+          <button onClick={handleWithdrawalClick} title='회원탈퇴'>
             <IoTrashBin />
             <span>회원탈퇴</span>
           </button>
