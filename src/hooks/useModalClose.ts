@@ -13,9 +13,18 @@ export const useModalClose = (onClose: () => void) => {
       }
     };
 
+    const handleESC = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
     document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keyup', handleESC);
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keyup', handleESC);
     };
   }, [onClose]);
 
